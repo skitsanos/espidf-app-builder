@@ -1,8 +1,30 @@
 # espidf-app-builder
 CLI utility for creating ESP-IDF apps
 
+
+### Installation
+
+Clone to your drive
+
+```ssh
+git clone https://github.com/skitsanos/espidf-app-builder.git
 ```
-Usage: app -name -path
+
+Once downloaded, you need to link. The npm link command allow us to locally ‘symlink a package folder’, and for our needs, it will locally install any command listed in the bin field of our package.json. In other words, npm link is like a NodeJS package installation simulator. It is worth to mention that npm link has a wider usage that exceeds the scope of this guide
+
+```ssh
+sudo npm link
+```
+
+Now you can run it by typing _esp32app_. Add --help to learn on command line arguments required
+
+```
+esp32app --help
+```
+
+### Command line arguments
+```
+Usage: esp32app -name -path
 
 Options:
   -v, --version                 output the version number
