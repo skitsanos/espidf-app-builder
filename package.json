@@ -1,7 +1,7 @@
 {
   "name": "espidf-app-builder",
   "description": "CLI utility for creating ESP-IDF apps",
-  "version": "1.0",
+  "version": "1.0.0",
   "author": {
     "name": "Skitsanos",
     "url": "https://github.com/skitsanos"
@@ -10,5 +10,8 @@
   "dependencies": {
     "commander": "^2.19.0",
     "winston": "^3.1.0"
+  },
+  "bin": {
+    "esp32app": "./app.js"
   }
 }
