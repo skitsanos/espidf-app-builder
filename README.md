@@ -10,7 +10,14 @@ Clone to your drive
 git clone https://github.com/skitsanos/espidf-app-builder.git
 ```
 
-Once downloaded, you need to link. The npm link command allow us to locally ‘symlink a package folder’, and for our needs, it will locally install any command listed in the bin field of our package.json. In other words, npm link is like a NodeJS package installation simulator. It is worth to mention that npm link has a wider usage that exceeds the scope of this guide
+Install dependencies
+
+```ssh
+cd espidf-app-builder
+npm install
+```
+
+Once dependencies installed, you need to link. The npm link command allow us to locally ‘symlink a package folder’, and for our needs, it will locally install any command listed in the bin field of our package.json. In other words, npm link is like a NodeJS package installation simulator. It is worth to mention that npm link has a wider usage that exceeds the scope of this guide
 
 ```ssh
 sudo npm link
