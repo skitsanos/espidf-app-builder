@@ -8,24 +8,48 @@
 
 const program = require('commander');
 const winston = require('winston');
+const Transport = require('winston-transport');
 const fs = require('fs');
 
+class FileTransport extends Transport
+{
+    constructor(opts)
+    {
+        super(opts);
+    }
+
+    log(info, callback)
+    {
+        fs.appendFile(process.cwd() + '/esp32app.log', `${info.level} ${info.message}\n`, (err) =>
+        {
+            if (err)
+            {
+                console.log(err.message);
+            }
+        });
+        callback();
+    }
+}
+
+const loggingFormat = winston.format.combine(
+    winston.format.colorize(),
+    winston.format.splat(),
+    winston.format.printf(info =>
+    {
+        return ` ${(new Date()).getTime()} ${info.level}: ${info.message}`;
+    }));
+
 const log = winston.createLogger({
+    exitOnError: false,
     transports: [
-        //
-        // - Write to all logs with level `info` and below to `combined.log`
-        // - Write all logs error (and below) to `error.log`.
-        //
-        //new winston.transports.File({ filename: 'error.log', level: 'error' }),
-        //new winston.transports.File({ filename: 'combined.log' })
+        new FileTransport(
+            {
+                format: loggingFormat,
+                timestamp: true
+            }
+        ),
         new winston.transports.Console({
-            format: winston.format.combine(
-                winston.format.colorize(),
-                winston.format.splat(),
-                winston.format.printf(info =>
-                {
-                    return ` ${(new Date()).getTime()} ${info.level}: ${info.message}`;
-                }))
+            format: loggingFormat
         })
     ]
 });
@@ -109,14 +133,14 @@ const app = {
 
 program
     .version('1.0.0', '-v, --version')
-    .usage('-name -path')
+    .usage('--app --path')
     .option('-a, --app <application name>', 'application name')
     .option('-p, --path <path>', 'path where application will be created')
     .parse(process.argv);
 
 log.info('espidf-app-builder %s', program.version());
 
-if (program.app === undefined && program.path === undefined)
+if (program.app === undefined || program.path === undefined)
 {
     log.warn('Missing parameters, run ' + program.name() + ' --help for more details');
     process.exit(0);
