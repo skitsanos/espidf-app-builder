@@ -50,3 +50,23 @@ After application structure created, don't forget to run config
 ```
 make menuconfig
 ```
+
+### Setting OSX Finder Quick Action with Automator
+
+![](osx-automator-esp32app.png)
+
+```sh
+if [ -x /usr/libexec/path_helper ]; then
+    eval `/usr/libexec/path_helper -s`
+fi
+
+if  [ -f "$HOME"/.profile ]; then
+    source "$HOME"/.profile
+elif [ -f "$HOME"/.bash_profile ]; then
+    source "$HOME"/.bash_profile
+elif [ -f "$HOME"/.bashrc ]; then
+    source "$HOME"/.bashrc
+fi
+
+esp32app --app $1 --path $2
+```
